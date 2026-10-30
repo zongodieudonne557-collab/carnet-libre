@@ -1,0 +1,177 @@
+/* Carnet Libre — jetons de design.
+   Clair  = feuille Seyès sur un bureau bleu-gris, encre bleu nuit.
+   Sombre = « tableau » d'école : ardoise verte, texte à la craie. */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../vendor/fonts/atkinson-hyperlegible-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../vendor/fonts/atkinson-hyperlegible-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../vendor/fonts/atkinson-hyperlegible-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playwrite FR Trad';
+  src: url('../vendor/fonts/playwrite-fr-trad-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --font-scale: 1;
+  --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-hand: 'Playwrite FR Trad', 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive;
+  --font-mono: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+
+  /* papier */
+  --desk: #e6ecf7;
+  --paper: #fcfdff;
+  --paper-2: #f3f6fc;
+  --paper-3: #e5ebf8;
+  --rule: #d2dcf1;
+  --rule-strong: #a3b5dc;
+  --margin: #e0607a;
+
+  /* encre */
+  --ink: #131e48;
+  --ink-2: #3a4775;
+  --ink-3: #56628e;
+  --blue: #1f45be;
+  --on-blue: #ffffff;
+  --blue-soft: #e2e9fb;
+  --blue-line: #9fb4ee;
+
+  /* surligneur et correction */
+  --hl: #ffe45e;
+  --hl-soft: #fff4ae;
+  --on-hl: #131e48;
+  --ok: #0c7048;
+  --ok-soft: #dcf4e7;
+  --bad: #b8243d;
+  --bad-soft: #fde4e9;
+  --warn: #7f4800;
+  --warn-soft: #fff0c4;
+
+  /* couvertures de cahier */
+  --cover-0: #2a5bd1;
+  --cover-1: #d23c4d;
+  --cover-2: #1b8f63;
+  --cover-3: #d96f0e;
+  --cover-4: #7449c4;
+  --cover-5: #0f96aa;
+
+  /* échelle d'espacement et de texte */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4.5rem;
+  --t-sm: 0.875rem;
+  --t-base: 1rem;
+  --t-lg: 1.2rem;
+  --t-xl: 1.5rem;
+  --t-2xl: 1.95rem;
+  --t-3xl: 2.5rem;
+
+  /* formes */
+  --r-sm: 4px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --shadow-1: 0 1px 0 rgb(19 30 72 / 0.06), 0 2px 6px -2px rgb(19 30 72 / 0.14);
+  --shadow-2: 0 1px 0 rgb(19 30 72 / 0.05), 0 12px 28px -14px rgb(19 30 72 / 0.38);
+  --focus: 0 0 0 3px var(--paper), 0 0 0 5px var(--blue);
+
+  --measure: 42rem;
+  --wide: 76rem;
+  --nav-h: 4rem;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --desk: #0d1715;
+  --paper: #1a2926;
+  --paper-2: #213430;
+  --paper-3: #2a403b;
+  --rule: #2f4540;
+  --rule-strong: #49665e;
+  --margin: #c9667b;
+  --ink: #eef2e8;
+  --ink-2: #cdd7c8;
+  --ink-3: #a7b6a4;
+  --blue: #a3c0ff;
+  --on-blue: #0b1633;
+  --blue-soft: #263a63;
+  --blue-line: #5a7bc4;
+  --hl: #f1d65c;
+  --hl-soft: #4d4619;
+  --on-hl: #1a2926;
+  --ok: #86e0ae;
+  --ok-soft: #1f4535;
+  --bad: #ff9aab;
+  --bad-soft: #4d2832;
+  --warn: #f4c874;
+  --warn-soft: #4d3b1a;
+  --cover-0: #3d6ed8;
+  --cover-1: #d9505f;
+  --cover-2: #25a073;
+  --cover-3: #e98e2e;
+  --cover-4: #8660d0;
+  --cover-5: #1fa8bb;
+  --shadow-1: 0 1px 0 rgb(0 0 0 / 0.3), 0 2px 6px -2px rgb(0 0 0 / 0.5);
+  --shadow-2: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -14px rgb(0 0 0 / 0.75);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --desk: #0d1715;
+    --paper: #1a2926;
+    --paper-2: #213430;
+    --paper-3: #2a403b;
+    --rule: #2f4540;
+    --rule-strong: #49665e;
+    --margin: #c9667b;
+    --ink: #eef2e8;
+    --ink-2: #cdd7c8;
+    --ink-3: #a7b6a4;
+    --blue: #a3c0ff;
+    --on-blue: #0b1633;
+    --blue-soft: #263a63;
+    --blue-line: #5a7bc4;
+    --hl: #f1d65c;
+    --hl-soft: #4d4619;
+    --on-hl: #1a2926;
+    --ok: #86e0ae;
+    --ok-soft: #1f4535;
+    --bad: #ff9aab;
+    --bad-soft: #4d2832;
+    --warn: #f4c874;
+    --warn-soft: #4d3b1a;
+    --cover-0: #3d6ed8;
+    --cover-1: #d9505f;
+    --cover-2: #25a073;
+    --cover-3: #e98e2e;
+    --cover-4: #8660d0;
+    --cover-5: #1fa8bb;
+    --shadow-1: 0 1px 0 rgb(0 0 0 / 0.3), 0 2px 6px -2px rgb(0 0 0 / 0.5);
+    --shadow-2: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -14px rgb(0 0 0 / 0.75);
+  }
+}

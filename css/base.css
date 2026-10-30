@@ -1,0 +1,296 @@
+/* Carnet Libre — base : remise à zéro légère, typographie, formulaires, accessibilité. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: calc(106.25% * var(--font-scale));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  line-height: 1.45;
+  margin: 0 0 var(--s3);
+  color: var(--ink);
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--t-2xl);
+}
+h2 {
+  font-size: var(--t-xl);
+}
+h3 {
+  font-size: var(--t-lg);
+}
+h4,
+h5 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-base);
+  margin: 0 0 var(--s2);
+}
+
+p {
+  margin: 0 0 var(--s3);
+}
+ul,
+ol {
+  margin: 0 0 var(--s3);
+  padding-left: 1.4rem;
+}
+small,
+.small {
+  font-size: var(--t-sm);
+}
+hr {
+  border: 0;
+  border-top: 2px solid var(--rule);
+  margin: var(--s5) 0;
+}
+strong,
+b {
+  font-weight: 700;
+}
+
+a {
+  color: var(--blue);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1.5px;
+}
+a:hover {
+  text-decoration-thickness: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+.icon {
+  flex: none;
+  vertical-align: -0.2em;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------ formulaires */
+label,
+.label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: var(--s1);
+}
+.hint {
+  display: block;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  margin-top: var(--s1);
+  line-height: 1.45;
+}
+
+input[type='text'],
+input[type='search'],
+input[type='url'],
+input[type='password'],
+input[type='number'],
+input[type='email'],
+select,
+textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--paper);
+  border: 2px solid var(--ink-3);
+  border-radius: var(--r-sm);
+  line-height: 1.4;
+}
+textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+select {
+  appearance: none;
+  padding-right: 2.4rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 55%, calc(100% - 0.8rem) 55%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+input[type='checkbox'],
+input[type='radio'] {
+  width: 1.3rem;
+  height: 1.3rem;
+  accent-color: var(--blue);
+  flex: none;
+  margin: 0;
+}
+input[type='range'] {
+  width: 100%;
+  accent-color: var(--blue);
+}
+input[type='file'] {
+  max-width: 100%;
+}
+
+.field {
+  margin-bottom: var(--s4);
+}
+.check {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-weight: 400;
+  margin: 0 0 var(--s2);
+  cursor: pointer;
+}
+.check input {
+  margin-top: 0.2rem;
+}
+
+/* ------------------------------------------------------------ accessibilité */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: var(--s3);
+  top: -5rem;
+  z-index: 300;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  border-radius: var(--r-sm);
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: var(--s3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .btn,
+  .chip,
+  .cover {
+    border: 2px solid ButtonText;
+  }
+}
+
+/* ------------------------------------------------------------ impression : fiches et cours propres sur papier */
+@media print {
+  :root {
+    --desk: #fff;
+    --paper: #fff;
+    --ink: #000;
+    --ink-2: #222;
+    --ink-3: #444;
+  }
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+  .app-header,
+  .nb-nav,
+  .no-print,
+  #toasts,
+  .btn,
+  dialog {
+    display: none !important;
+  }
+  .sheet,
+  .prose {
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  a {
+    color: #000;
+  }
+}
+
+.lead {
+  max-width: 40rem;
+  font-size: var(--t-lg);
+  line-height: 1.55;
+  color: var(--ink-2);
+}

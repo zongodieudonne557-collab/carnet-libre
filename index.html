@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--
+    Règle de sécurité (CSP) : l'appli ne peut parler qu'à elle-même, à ton ordinateur (Ollama, LM Studio…)
+    et aux quatre services d'IA listés dans connect-src. Aucun script ni style en ligne, aucun site tiers.
+    Pour autoriser un autre service d'IA, ajoute son adresse à connect-src (voir docs/ajouter-un-fournisseur.md).
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:* https://api.groq.com https://generativelanguage.googleapis.com https://openrouter.ai https://api.mistral.ai; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Carnet Libre — réviser tes cours, librement</title>
+  <meta name="description" content="Carnet Libre : dépose tes cours, pose-leur des questions, révise avec des cartes, des quiz et des podcasts. Libre, gratuit, sans compte ; tes données restent sur ton appareil.">
+  <meta name="theme-color" content="#fcfdff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a2926" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+  <script src="src/boot.js"></script>
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" id="skip-link" href="#main">Aller au contenu</a>
+  <header class="app-header" id="app-header"></header>
+  <main id="main" tabindex="-1">
+    <p class="boot-note">Chargement de Carnet Libre…</p>
+    <noscript><p class="boot-note">Carnet Libre a besoin de JavaScript pour fonctionner. Active-le dans ton navigateur, puis recharge la page.</p></noscript>
+  </main>
+  <div id="toasts"></div>
+  <div id="live" class="visually-hidden" role="status" aria-live="polite"></div>
+</body>
+</html>

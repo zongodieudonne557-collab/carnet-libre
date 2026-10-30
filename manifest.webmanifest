@@ -1,0 +1,20 @@
+{
+  "name": "Carnet Libre",
+  "short_name": "Carnet Libre",
+  "description": "Dépose tes cours, pose-leur des questions, révise avec des cartes, des quiz et des podcasts. Libre, gratuit, sans compte : tes données restent sur ton appareil.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./#/",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "background_color": "#fcfdff",
+  "theme_color": "#fcfdff",
+  "categories": ["education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

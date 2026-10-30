@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Carnet Libre</title>
+  <rect width="64" height="64" rx="14" fill="#2149c1"/>
+  <rect width="9" height="64" fill="#1a3a9e"/>
+  <rect x="20" y="14" width="30" height="24" rx="3" fill="#fcfdff"/>
+  <path d="M26 14v24" stroke="#e0607a" stroke-width="2"/>
+  <path d="M31 22h14M31 29h10" stroke="#a3b5dc" stroke-width="2" stroke-linecap="round"/>
+  <rect x="18" y="44" width="32" height="8" rx="4" fill="#ffe45e" transform="rotate(-4 34 48)"/>
+</svg>

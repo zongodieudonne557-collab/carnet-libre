@@ -1,0 +1,661 @@
+/* Carnet Libre — composants réutilisables. */
+
+/* ------------------------------------------------------------ boutons : touche « stylo » avec un trait dur dessous */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 3px 0 var(--ink);
+  transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+}
+.btn:hover {
+  background: var(--paper-2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--ink);
+  text-decoration: none;
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  transform: none;
+  box-shadow: 0 3px 0 var(--ink);
+}
+
+.btn-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--on-blue);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--blue) 50%, #000);
+}
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--blue) 88%, #000);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--blue) 50%, #000);
+}
+.btn-primary:active {
+  box-shadow: 0 0 0 transparent;
+}
+.btn-primary:disabled {
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--blue) 50%, #000);
+}
+
+.btn-danger {
+  border-color: var(--bad);
+  color: var(--bad);
+  box-shadow: 0 3px 0 var(--bad);
+}
+.btn-danger:hover {
+  background: var(--bad-soft);
+  box-shadow: 0 4px 0 var(--bad);
+}
+.btn-danger:active {
+  box-shadow: 0 0 0 var(--bad);
+}
+
+.btn-quiet {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ink-2);
+}
+.btn-quiet:hover {
+  background: var(--paper-3);
+  box-shadow: none;
+  transform: none;
+  color: var(--ink);
+}
+.btn-quiet:active {
+  transform: none;
+}
+
+.btn-sm {
+  min-height: 2.5rem;
+  padding: 0.3rem 0.8rem;
+  font-size: var(--t-sm);
+}
+.btn-icon {
+  width: 2.75rem;
+  padding: 0;
+}
+.btn-sm.btn-icon {
+  width: 2.5rem;
+}
+.btn-block {
+  width: 100%;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  align-items: center;
+}
+
+/* lien qui ressemble à un texte cliquable (dans une phrase) */
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1.5px;
+  font-weight: inherit;
+}
+.link-btn:hover {
+  text-decoration-thickness: 3px;
+}
+
+/* ------------------------------------------------------------ pastilles et étiquettes */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.12rem 0.65rem;
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  font-weight: 700;
+  line-height: 1.5;
+  background: var(--paper-3);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip-ok {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+.chip-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.chip-bad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+.chip-info {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.chip-hl {
+  background: var(--hl);
+  color: var(--on-hl);
+}
+button.chip {
+  border: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+
+/* question suggérée : étiquette cliquable */
+.suggest {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 2px solid var(--rule-strong);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+  line-height: 1.35;
+}
+.suggest:hover {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+/* ------------------------------------------------------------ interrupteur */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  font-weight: 400;
+  margin: 0;
+}
+.switch input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  width: 2.9rem;
+  height: 1.7rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--ink-3);
+  transition: background-color 0.15s;
+}
+.switch input::after {
+  content: '';
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.15s;
+}
+.switch input:checked {
+  background: var(--blue);
+}
+.switch input:checked::after {
+  transform: translateX(1.2rem);
+}
+.switch input:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------ barre de progression */
+.progress {
+  height: 0.65rem;
+  background: var(--paper-3);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  width: calc(var(--p, 0) * 1%);
+  background: var(--blue);
+  border-radius: 999px;
+  transition: width 0.25s ease-out;
+}
+.progress[data-indeterminate] > span {
+  width: 40%;
+  animation: slide 1.2s ease-in-out infinite alternate;
+}
+@keyframes slide {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(160%);
+  }
+}
+
+/* ------------------------------------------------------------ encadrés */
+.callout {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  margin: 0 0 var(--s4);
+  border: 2px solid var(--blue-line);
+  border-radius: var(--r-md);
+  background: var(--blue-soft);
+  color: var(--ink);
+}
+.callout > .icon {
+  margin-top: 0.2rem;
+  color: var(--blue);
+}
+.callout > div > :last-child {
+  margin-bottom: 0;
+}
+.callout-warn {
+  background: var(--warn-soft);
+  border-color: var(--warn);
+}
+.callout-warn > .icon {
+  color: var(--warn);
+}
+.callout-bad {
+  background: var(--bad-soft);
+  border-color: var(--bad);
+}
+.callout-bad > .icon {
+  color: var(--bad);
+}
+.callout-ok {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+}
+.callout-ok > .icon {
+  color: var(--ok);
+}
+
+/* ------------------------------------------------------------ page blanche (état vide) */
+.empty {
+  text-align: center;
+  padding: var(--s6) var(--s4);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+}
+.empty > .icon {
+  color: var(--blue);
+  margin-bottom: var(--s2);
+}
+.empty h2,
+.empty h3 {
+  margin-bottom: var(--s2);
+}
+.empty p {
+  max-width: 34rem;
+  margin-inline: auto;
+  color: var(--ink-2);
+}
+.empty .btn-row {
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------ onglets de cahier (sous-navigation) */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  border-bottom: 2px solid var(--rule-strong);
+  margin-bottom: var(--s4);
+}
+.tabs button,
+.tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid transparent;
+  border-bottom: 0;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: -2px;
+}
+.tabs button:hover,
+.tabs a:hover {
+  background: var(--paper-3);
+  color: var(--ink);
+}
+.tabs [aria-selected='true'],
+.tabs [aria-current='page'] {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--rule-strong);
+  box-shadow: inset 0 3px 0 var(--blue);
+}
+
+/* ------------------------------------------------------------ liste « lignes de cahier » */
+.ruled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ruled > li {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: 0.8rem 0.25rem;
+  border-bottom: 2px solid var(--rule);
+}
+.ruled > li:last-child {
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------------------ boîtes de dialogue */
+dialog.modal {
+  border: 0;
+  padding: 0;
+  margin: auto;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+  width: min(40rem, calc(100vw - 2rem));
+  max-height: min(90dvh, 54rem);
+  overflow: hidden;
+}
+dialog.modal.wide {
+  width: min(56rem, calc(100vw - 2rem));
+}
+dialog.modal.narrow {
+  width: min(28rem, calc(100vw - 2rem));
+}
+dialog.modal[open] {
+  display: flex;
+  flex-direction: column;
+  animation: pop 0.16s ease-out;
+}
+dialog.modal::backdrop {
+  background: rgb(7 12 34 / 0.6);
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem) scale(0.985);
+  }
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: 0.75rem 0.75rem 0.75rem 1.25rem;
+  border-bottom: 2px solid var(--rule);
+}
+.modal-head h2 {
+  margin: 0;
+  font-size: var(--t-lg);
+}
+.modal-body {
+  padding: 1.25rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.modal-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--s3);
+  padding: 0.85rem 1.25rem;
+  border-top: 2px solid var(--rule);
+  background: var(--paper-2);
+}
+@media (max-width: 40rem) {
+  dialog.modal,
+  dialog.modal.wide,
+  dialog.modal.narrow {
+    width: 100%;
+    max-width: 100%;
+    margin: auto 0 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    max-height: 92dvh;
+  }
+  .modal-foot .btn {
+    flex: 1 1 auto;
+  }
+}
+
+/* ------------------------------------------------------------ messages éphémères */
+#toasts {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--nav-h) + var(--s4));
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s2);
+  padding: 0 var(--s4);
+  pointer-events: none;
+}
+@media (min-width: 62rem) {
+  #toasts {
+    bottom: var(--s5);
+  }
+}
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  max-width: min(34rem, 100%);
+  padding: 0.7rem 0.9rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-2);
+  animation: pop 0.18s ease-out;
+}
+.toast .icon {
+  margin-top: 0.2rem;
+}
+.toast-error {
+  background: var(--bad);
+  color: #fff;
+}
+:root[data-theme='dark'] .toast-error {
+  color: #2b0a12;
+}
+.toast .link-btn,
+.toast button {
+  color: inherit;
+  font-weight: 700;
+  margin-left: 0.4rem;
+}
+
+/* ------------------------------------------------------------ texte formaté (Markdown rendu) */
+.prose {
+  line-height: 1.7;
+  font-size: var(--t-base);
+}
+.prose > :last-child {
+  margin-bottom: 0;
+}
+.prose h1,
+.prose h2,
+.prose h3 {
+  margin-top: var(--s4);
+}
+.prose h1 {
+  font-size: var(--t-xl);
+}
+.prose h2 {
+  font-size: var(--t-lg);
+}
+.prose h3,
+.prose h4 {
+  font-size: var(--t-base);
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+.prose li {
+  margin: 0.25rem 0;
+}
+.prose li > ul,
+.prose li > ol {
+  margin: 0.25rem 0;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  background: var(--paper-3);
+  border-radius: 4px;
+}
+.prose pre {
+  margin: 0 0 var(--s3);
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  background: var(--paper-3);
+  border-radius: var(--r-sm);
+  line-height: 1.5;
+}
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+.prose blockquote {
+  margin: 0 0 var(--s3);
+  padding: 0.2rem 1rem;
+  border-left: 4px solid var(--blue-line);
+  color: var(--ink-2);
+}
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 var(--s3);
+}
+.prose th,
+.prose td {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--rule-strong);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  background: var(--paper-3);
+}
+.prose mark,
+mark {
+  background: linear-gradient(transparent 12%, var(--hl) 12%, var(--hl) 92%, transparent 92%);
+  color: var(--on-hl);
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+.prose .math-display {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: var(--s3) 0;
+  text-align: center;
+}
+.prose .math-raw {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* citation numérotée [n] dans une réponse : un coup de surligneur cliquable */
+.cite {
+  display: inline-block;
+  min-width: 1.5em;
+  margin: 0 0.12em;
+  padding: 0.05em 0.4em;
+  border: 0;
+  border-radius: 4px;
+  background: var(--hl);
+  color: var(--on-hl);
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1.5;
+  vertical-align: 0.2em;
+  cursor: pointer;
+}
+.cite:hover {
+  outline: 2px solid var(--ink);
+}
+
+.kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  text-align: center;
+  background: var(--paper);
+  border: 2px solid var(--ink-3);
+  border-bottom-width: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------ lecture mathématique (KaTeX) */
+.katex {
+  font-size: 1.08em;
+}
+.katex-display {
+  margin: 0.4em 0;
+}
+
+/* ------------------------------------------------------------ commutateur à deux positions (segments) */
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  border: 2px solid var(--ink-3);
+  border-radius: 999px;
+  background: var(--paper);
+}
+.seg button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.2rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font-weight: 700;
+  font-size: var(--t-sm);
+}
+.seg button:hover {
+  background: var(--paper-3);
+}
+.seg button[aria-pressed='true'],
+.seg button[aria-checked='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}

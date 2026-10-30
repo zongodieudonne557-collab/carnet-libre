@@ -1,0 +1,35 @@
+{
+  "name": "carnet-libre",
+  "version": "0.1.0",
+  "description": "Carnet Libre — assistant de révision libre et gratuit : importe tes cours, discute avec eux (avec citations), génère flashcards, quiz, podcasts et diapos narrées. 100 % local.",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "vendor": "node scripts/vendor.mjs",
+    "icons": "node scripts/build-icons.mjs",
+    "app-icons": "node scripts/build-app-icons.mjs",
+    "precache": "node scripts/build-precache.mjs",
+    "mock-llm": "node scripts/mock-llm.mjs",
+    "test": "node --test \"test/unit/*.test.mjs\"",
+    "test:browser": "node --test --test-concurrency=1 \"test/browser/*.test.mjs\"",
+    "test:e2e": "node test/e2e/run.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/atkinson-hyperlegible": "5.3.0",
+    "@fontsource/playwrite-fr-trad": "5.3.0",
+    "@tesseract.js-data/fra": "1.0.0",
+    "fake-indexeddb": "6.2.6",
+    "fflate": "0.8.3",
+    "katex": "0.19.1",
+    "lucide-static": "1.61.0",
+    "pdfjs-dist": "6.4.299",
+    "playwright": "1.63.0",
+    "tesseract.js": "7.0.0",
+    "tesseract.js-core": "7.0.0"
+  }
+}

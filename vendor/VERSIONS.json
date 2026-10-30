@@ -1,0 +1,10 @@
+{
+  "pdfjs-dist": "6.4.299",
+  "fflate": "0.8.3",
+  "katex": "0.19.1",
+  "tesseract.js": "7.0.0",
+  "tesseract.js-core": "7.0.0",
+  "@tesseract.js-data/fra": "1.0.0",
+  "@fontsource/atkinson-hyperlegible": "5.3.0",
+  "@fontsource/playwrite-fr-trad": "5.3.0"
+}
