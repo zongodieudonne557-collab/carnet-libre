@@ -199,3 +199,28 @@ export const isCloud = (id) => PROVIDERS[id]?.kind === 'cloud';
 export function connectOrigins() {
   return [...new Set(Object.values(PROVIDERS).map((p) => p.connectOrigin).filter(Boolean))];
 }
+
+/** L'adresse désigne-t-elle ton propre ordinateur ? (seule forme que la règle de sécurité autorise sans service déclaré) */
+export function isLocalUrl(url) {
+  try {
+    const u = new URL(String(url));
+    return (u.protocol === 'http:' || u.protocol === 'https:') && (u.hostname === 'localhost' || u.hostname === '127.0.0.1');
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Cette adresse peut-elle être jointe par l'appli ? La règle de sécurité (CSP) de index.html n'autorise
+ * que ton ordinateur (localhost, 127.0.0.1) et les services listés ci-dessus. Toute autre adresse
+ * serait bloquée par le navigateur : mieux vaut le dire avant le test que laisser croire à une panne réseau.
+ */
+export function allowedByCsp(url) {
+  if (isLocalUrl(url)) return true;
+  try {
+    const u = new URL(String(url));
+    return u.protocol === 'https:' && connectOrigins().includes(u.origin);
+  } catch {
+    return false;
+  }
+}

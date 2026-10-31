@@ -77,9 +77,9 @@ async function persistKeys() {
 
 export async function updateSettings(patch) {
   state = merge(state, patch);
+  emit(); // le thème et la taille du texte changent tout de suite, sans attendre l'écriture sur l'appareil
   await db.put('settings', { key: 'app', value: state });
   if (!state.ai.remember) await db.delete('settings', 'secret');
-  emit();
   return state;
 }
 

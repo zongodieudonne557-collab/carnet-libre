@@ -7,6 +7,8 @@ export { icon };
 
 const TAG = /^([a-zA-Z][\w-]*)?((?:[.#][\w-]+)*)$/;
 const BOOL_PROPS = new Set(['hidden', 'disabled', 'checked', 'selected', 'required', 'multiple', 'readOnly', 'autofocus', 'open', 'draggable', 'spellcheck']);
+// pour ces deux-là, « false » est une vraie valeur (désactiver la correction orthographique), pas une absence
+const FALSE_IS_VALUE = new Set(['draggable', 'spellcheck']);
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 const isChild = (v) => v === null || v === undefined || typeof v !== 'object' || v instanceof Node || Array.isArray(v);
@@ -31,7 +33,7 @@ export function h(tag, props, ...children) {
   let value;
   if (props) {
     for (const [k, v] of Object.entries(props)) {
-      if (v === null || v === undefined || v === false) continue;
+      if (v === null || v === undefined || (v === false && !FALSE_IS_VALUE.has(k))) continue;
       if (k === 'class' || k === 'className') {
         const list = Array.isArray(v) ? v : typeof v === 'object' ? Object.keys(v).filter((x) => v[x]) : String(v).split(/\s+/);
         for (const c of list.flat()) if (c) el.classList.add(c);

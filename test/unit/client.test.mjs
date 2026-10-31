@@ -185,6 +185,10 @@ test('configuration : messages clairs', () => {
   const ok = resolveConfig(S({ provider: 'custom', baseUrl: 'http://localhost:1234/v1/', model: 'models/m' }), '');
   assert.equal(ok.baseUrl, 'http://localhost:1234/v1');
   assert.equal(ok.model, 'm');
+  // le serveur « perso » est classé « reste sur l'appareil » : il ne peut pas être distant (sinon aucun accord ne serait demandé)
+  assert.throws(() => resolveConfig(S({ provider: 'custom', baseUrl: 'https://exemple.org/v1', model: 'x' }), ''), (e) => e.kind === 'config' && /ordinateur/.test(e.message));
+  assert.throws(() => resolveConfig(S({ provider: 'custom', baseUrl: 'http://192.168.1.20:1234/v1', model: 'x' }), ''), (e) => e.kind === 'config');
+  assert.equal(resolveConfig(S({ provider: 'custom', baseUrl: 'http://127.0.0.1:8080/v1', model: 'x' }), '').baseUrl, 'http://127.0.0.1:8080/v1');
   assert.equal(resolveConfig(S({ provider: 'ollama', model: 'llama' }), '').baseUrl, 'http://localhost:11434/v1');
   assert.equal(resolveConfig(S({ provider: 'gemini', model: 'g' }), 'k').key, 'k');
 });

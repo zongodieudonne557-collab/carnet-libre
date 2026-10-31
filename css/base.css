@@ -32,7 +32,7 @@ h2,
 h3 {
   font-family: var(--font-hand);
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.6;
   margin: 0 0 var(--s3);
   color: var(--ink);
   text-wrap: balance;

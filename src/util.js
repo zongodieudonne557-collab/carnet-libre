@@ -65,7 +65,8 @@ export function formatDuration(ms) {
 export function formatBytes(n) {
   if (n < 1024) return `${n} o`;
   if (n < 1048576) return `${(n / 1024).toFixed(0)} Ko`;
-  return `${(n / 1048576).toFixed(1).replace('.', ',')} Mo`;
+  if (n < 1073741824) return `${(n / 1048576).toFixed(1).replace('.', ',')} Mo`;
+  return `${(n / 1073741824).toFixed(1).replace('.', ',')} Go`;
 }
 
 /** Date locale courte : « 25 oct. 2026 ». */

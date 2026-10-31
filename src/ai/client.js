@@ -2,7 +2,7 @@
 // ou avec l'API native de Google Gemini. Streaming, nouvelles tentatives et messages d'erreur
 // en français qui disent quoi faire.
 import { getSettings, getApiKey, hasConsent } from '../settings.js';
-import { PROVIDERS } from './providers.js';
+import { PROVIDERS, isLocalUrl } from './providers.js';
 import { sleep } from '../util.js';
 
 export class AIError extends Error {
@@ -28,6 +28,9 @@ export function resolveConfig(settings = getSettings(), key = getApiKey(settings
   const baseUrl = String(p.id === 'custom' ? a.baseUrl : p.baseUrl || '').trim().replace(/\/+$/, '');
   if (!baseUrl) throw new AIError('config', 'Indique l’adresse du serveur dans les Réglages.');
   if (!/^https?:\/\//i.test(baseUrl)) throw new AIError('config', 'L’adresse du serveur doit commencer par http:// ou https://.');
+  // Le serveur « perso » est classé « reste sur ton appareil » (aucun accord demandé) : il ne peut donc être que chez toi.
+  // Un service en ligne doit être ajouté comme vrai fournisseur, avec ses règles de confidentialité et son accord d'envoi.
+  if (p.id === 'custom' && !isLocalUrl(baseUrl)) throw new AIError('config', 'Un serveur perso doit tourner sur ton ordinateur (adresse en localhost). Pour un service en ligne, ajoute-le comme fournisseur : voir la documentation.');
   if (p.needsKey && !key) throw new AIError('config', `Colle ta clé ${p.short} dans les Réglages.`);
   return { provider: p, baseUrl, key, model: String(a.model || '').replace(/^models\//, ''), temperature: a.temperature ?? 0.4, onlyFree: a.onlyFree };
 }

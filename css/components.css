@@ -224,8 +224,9 @@ button.chip {
 
 /* ------------------------------------------------------------ barre de progression */
 .progress {
-  height: 0.65rem;
-  background: var(--paper-3);
+  height: 0.75rem;
+  background: var(--paper);
+  border: 2px solid var(--rule-strong);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -633,10 +634,17 @@ mark {
 /* ------------------------------------------------------------ commutateur à deux positions (segments) */
 .seg {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   padding: 3px;
   border: 2px solid var(--ink-3);
-  border-radius: 999px;
+  border-radius: 1.5rem;
   background: var(--paper);
+}
+@media (max-width: 30rem) {
+  .seg button {
+    padding-inline: 0.6rem;
+  }
 }
 .seg button {
   display: inline-flex;
