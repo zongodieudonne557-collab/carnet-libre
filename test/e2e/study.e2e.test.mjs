@@ -564,3 +564,24 @@ test('texte à trous : les blancs « _____ » restent des blancs (ni gras, ni it
   assert.match(out.plain, /la _____ est la dérivée/);
   await context.close();
 });
+
+test('discussion : les messages de confirmation se placent au-dessus de la zone de saisie, sur ordinateur et sur téléphone', async () => {
+  for (const viewport of [{ width: 1280, height: 520 }, { width: 375, height: 560 }]) {
+    // fenêtre basse : la zone de saisie est collée en bas de l'écran, c'est là que le chevauchement se produisait
+    const app = await sample({ viewport });
+    const { page, go, context } = app;
+    await go('discuter', '#chat-input');
+    await page.evaluate(async () => (await import('/src/ui/dom.js')).toast('Fiche enregistrée pour le test.', { kind: 'ok', timeout: 0 }));
+    await page.locator('.toast').waitFor();
+    const box = async (sel) => page.locator(sel).first().boundingBox();
+    const t = await box('.toast');
+    const f = await box('.chat-form');
+    const apart = t.y + t.height <= f.y + 1 || f.y + f.height <= t.y + 1;
+    assert.ok(apart, `le message (${Math.round(t.y)}–${Math.round(t.y + t.height)}) ne doit pas recouvrir la zone de saisie (${Math.round(f.y)}–${Math.round(f.y + f.height)}) en ${viewport.width} px`);
+    assert.ok(f.y + f.height > viewport.height - 140, 'la zone de saisie est bien collée en bas dans ce test');
+    // en quittant la discussion, la place réservée est rendue
+    await go('reviser', '.tiles');
+    assert.equal(await page.evaluate(() => document.documentElement.style.getPropertyValue('--compose-h')), '');
+    await context.close();
+  }
+});

@@ -187,3 +187,43 @@ test('mise à jour : une nouvelle version est proposée, jamais imposée, puis r
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+test('sous-dossier (GitHub Pages « /nom-du-dépôt/ ») : l’appli, le service worker et le hors-ligne marchent', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'carnet-sub-'));
+  const server = await startServer({ root: dir });
+  try {
+    const sub = join(dir, 'carnet-libre');
+    for (const p of ['index.html', 'manifest.webmanifest', 'sw.js', 'precache.js', 'css', 'src', 'icons', 'vendor/fonts', 'vendor/katex', 'vendor/fflate']) {
+      await cp(join(ROOT, p), join(sub, p), { recursive: true });
+    }
+    const context = await env.browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
+    const page = await context.newPage();
+    const errors = [];
+    const failed = [];
+    page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+    page.on('pageerror', (e) => errors.push(e.message));
+    page.on('requestfailed', (r) => failed.push(r.url()));
+    const base = `${server.url}/carnet-libre/`;
+    await page.goto(`${base}index.html`);
+    await textOf(page, '#main', /Carnet|cahier|étagère|Commencer|nouveau/i);
+    const reg = await page.evaluate(async () => (await navigator.serviceWorker.ready).scope);
+    assert.equal(reg, base, 'le service worker couvre le sous-dossier, et seulement lui');
+    await page.reload();
+    await page.waitForFunction(() => !!navigator.serviceWorker.controller);
+    const keys = await cacheKeys(page);
+    const urls = Object.values(keys).flat();
+    assert.ok(urls.includes(`${base}index.html`) && urls.includes(`${base}src/main.js`));
+    assert.ok(urls.every((u) => u.startsWith(base)), 'rien en dehors du sous-dossier');
+
+    await context.setOffline(true);
+    await page.goto(`${base}index.html#/reglages`);
+    await page.reload();
+    await textOf(page, '#main', /Réglages/);
+    assert.deepEqual(failed.filter((u) => !/\/(sw|precache)\.js$/.test(u)), []);
+    assert.deepEqual(errors.filter((e) => !/ERR_INTERNET_DISCONNECTED/.test(e)), []);
+    await context.close();
+  } finally {
+    await server.close();
+    await rm(dir, { recursive: true, force: true });
+  }
+});

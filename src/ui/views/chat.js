@@ -128,6 +128,17 @@ export default async function chatView({ root, shell, signal, onCleanup }) {
   const offSettings = subscribe(() => paintStatus());
   onCleanup(offSettings);
 
+  // Les messages de confirmation (en bas de l'écran) se placent au-dessus de la zone de saisie, jamais dessus.
+  if (typeof ResizeObserver === 'function') {
+    const root$ = document.documentElement;
+    const observer = new ResizeObserver(() => root$.style.setProperty('--compose-h', `${form.offsetHeight + 12}px`));
+    observer.observe(form);
+    onCleanup(() => {
+      observer.disconnect();
+      root$.style.removeProperty('--compose-h');
+    });
+  }
+
   // ---------------------------------------------------------------- affichage du fil
   function citeFor(refs) {
     return { refs: new Map((refs || []).map((r) => [r.n, r])), onOpen: (ref) => openPassage({ chunkId: ref.chunkId }) };

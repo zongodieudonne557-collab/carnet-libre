@@ -1,9 +1,9 @@
 // Fichier généré par « npm run precache » : ne pas modifier à la main.
 // Il change dès qu'un fichier de l'appli change, ce qui déclenche la mise à jour du mode hors ligne.
 self.PRECACHE = {
- "version": "6409dddb795a",
+ "version": "9fa78c5f992a",
  "lazyVersion": "6cc4bb54be2b",
- "shellBytes": 1358028,
+ "shellBytes": 1358638,
  "lazyBytes": 14880128,
  "shell": [
   "css/base.css",

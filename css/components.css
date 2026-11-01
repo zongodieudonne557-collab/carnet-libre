@@ -449,7 +449,8 @@ dialog.modal::backdrop {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(var(--nav-h) + var(--s4));
+  /* --compose-h : hauteur de la zone de saisie de la discussion, quand elle est affichée */
+  bottom: calc(var(--nav-h) + var(--s4) + var(--compose-h, 0px));
   z-index: 400;
   display: flex;
   flex-direction: column;
@@ -460,7 +461,7 @@ dialog.modal::backdrop {
 }
 @media (min-width: 62rem) {
   #toasts {
-    bottom: var(--s5);
+    bottom: calc(var(--s5) + var(--compose-h, 0px));
   }
 }
 .toast {
