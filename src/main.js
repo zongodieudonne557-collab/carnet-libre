@@ -213,10 +213,50 @@ async function boot() {
   registerWorker();
 }
 
+/**
+ * Mode hors ligne : sw.js garde l'appli sur l'appareil. Quand une nouvelle version est prête, on le dit
+ * et c'est la personne qui choisit le moment de recharger (pas de page qui change sous ses doigts).
+ */
 function registerWorker() {
   if (!('serviceWorker' in navigator)) return;
   if (new URLSearchParams(location.search).has('nosw')) return;
-  navigator.serviceWorker.register('sw.js').catch((e) => console.warn('Mode hors ligne indisponible :', e?.message));
+  const hadController = !!navigator.serviceWorker.controller; // faux à la toute première visite : rien à proposer
+  let updating = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (updating) location.reload();
+  });
+  const offer = (worker) =>
+    toast('Une nouvelle version de Carnet Libre est prête.', {
+      kind: 'ok',
+      timeout: 0,
+      action: {
+        label: 'Mettre à jour',
+        onClick: () => {
+          updating = true;
+          worker.postMessage({ type: 'SKIP_WAITING' });
+        },
+      },
+    });
+  navigator.serviceWorker
+    .register('sw.js')
+    .then((reg) => {
+      if (reg.waiting && hadController) offer(reg.waiting);
+      reg.addEventListener('updatefound', () => {
+        const w = reg.installing;
+        w?.addEventListener('statechange', () => {
+          if (w.state === 'installed' && navigator.serviceWorker.controller) offer(w);
+        });
+      });
+      // Appli laissée ouverte des jours (téléphone) : on revérifie quand on y revient, au plus une fois par heure.
+      let last = Date.now();
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && Date.now() - last > 3600e3) {
+          last = Date.now();
+          reg.update().catch(() => {});
+        }
+      });
+    })
+    .catch((e) => console.warn('Mode hors ligne indisponible :', e?.message));
 }
 
 boot();

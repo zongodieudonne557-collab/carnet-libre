@@ -1,4 +1,4 @@
-// Réglages : IA (fournisseur, clé, modèle, accord d'envoi), apparence, voix, données, à propos.
+// Réglages : IA (fournisseur, clé, modèle, accord d'envoi), apparence, voix, hors ligne, données, à propos.
 import { getApiKey, getSettings, hasConsent, revokeConsent, setApiKey, subscribe, updateSettings } from '../../settings.js';
 import { listModels, resolveConfig, testConnection } from '../../ai/client.js';
 import { suggestModel } from '../../ai/models.js';
@@ -11,6 +11,7 @@ import { secretInput, segmented } from '../controls.js';
 import { h, icon, mount, plural, toast } from '../dom.js';
 import { href } from '../router.js';
 import { dataSection } from '../settings-data.js';
+import { offlineSection } from '../settings-offline.js';
 import { voiceSection } from '../settings-voice.js';
 
 // Listes de modèles déjà récupérées pendant cette session (providerId → [{id, label}]).
@@ -399,6 +400,7 @@ export default async function settingsView({ root, onCleanup, setTitle }) {
     { id: 'ia', title: 'Intelligence artificielle', icon: 'sparkles', el: aiSection() },
     { id: 'apparence', title: 'Apparence', icon: 'sun', el: lookSection(onCleanup) },
     { id: 'voix', title: 'Lecture à voix haute', icon: 'volume-2', el: voiceSection() },
+    { id: 'hors-ligne', title: 'Hors ligne', icon: 'wifi-off', el: offlineSection(onCleanup) },
     { id: 'donnees', title: 'Mes données', icon: 'hard-drive', el: dataSection() },
     { id: 'apropos', title: 'À propos', icon: 'info', el: aboutSection() },
   ];

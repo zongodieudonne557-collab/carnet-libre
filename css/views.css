@@ -2210,3 +2210,27 @@ details.help summary {
     font-style: italic;
   }
 }
+
+/* ---------------------------------------------------------------- réglages : hors ligne */
+.offline-list {
+  list-style: none;
+  margin: var(--s3) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s1);
+}
+.offline-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s1) var(--s3);
+  padding: var(--s2) 0;
+  border-bottom: 1px dashed var(--rule-strong);
+}
+.offline-action {
+  margin: var(--s3) 0;
+}
+.offline-action .icon {
+  vertical-align: -0.2em;
+}

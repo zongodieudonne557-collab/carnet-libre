@@ -5,7 +5,7 @@ import { kindChip, privacyBlock } from '../ai-gate.js';
 import { h, icon, mount } from '../dom.js';
 import { href } from '../router.js';
 
-const UPDATED_ON = '30 octobre 2026';
+const UPDATED_ON = '1er novembre 2026';
 
 const section = (id, ic, title, ...content) =>
   h('section.set', { 'aria-labelledby': `p-${id}` }, h('h2', { id: `p-${id}` }, icon(ic, { size: 26 }), title), content);
@@ -37,6 +37,7 @@ export default async function privacyView({ root, setTitle }) {
           h('li', 'Tes carnets, sources (le texte tiré de tes fichiers), cartes, quiz, fiches, podcasts, diapos et l’historique de tes discussions sont enregistrés dans le navigateur de cet appareil. Carnet Libre n’a pas de serveur : il n’en existe aucune copie ailleurs.'),
           h('li', 'Tes fichiers ne sont pas envoyés pour être lus : les PDF, Word, PowerPoint et les photos (reconnaissance du texte, ou OCR) sont traités directement dans ton navigateur.'),
           h('li', 'Tes clés d’API ne sont enregistrées sur l’appareil que si tu coches « Mémoriser ». Sinon elles restent en mémoire et disparaissent à la fermeture de l’onglet. La clé d’un service n’est jamais envoyée à un autre.'),
+          h('li', 'Le mode hors ligne garde seulement les fichiers de l’appli, pour qu’elle s’ouvre sans Internet. Il ne voit ni ne garde jamais tes données, ni les demandes envoyées à une IA.'),
           h('li', 'Pas de compte, pas de cookie, pas de publicité, pas de statistiques, pas de pisteur. Aucune police ni bibliothèque n’est chargée depuis un autre site : tout vient du même endroit que l’appli, et la règle de sécurité du navigateur l’impose.')
         )
       ),

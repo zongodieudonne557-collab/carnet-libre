@@ -541,3 +541,26 @@ test('IA lente : « Annuler » arrête la tâche et rien n’est enregistré', a
   assert.deepEqual(app.log.errors, []);
   await context.close();
 });
+
+test('texte à trous : les blancs « _____ » restent des blancs (ni gras, ni italique), à l’écran et en texte brut', async () => {
+  const app = await sample();
+  const { page, context } = app;
+  const out = await page.evaluate(async () => {
+    const { renderMarkdown, markdownToText } = await import('/src/ui/markdown.js');
+    const el = renderMarkdown('Complète : la _____ est la dérivée de __gras__ et de *italique*.\n\n- un _____ dans une liste');
+    const box = document.createElement('div');
+    box.append(el);
+    return {
+      text: box.textContent,
+      strong: [...box.querySelectorAll('strong')].map((n) => n.textContent),
+      em: [...box.querySelectorAll('em')].map((n) => n.textContent),
+      plain: markdownToText('Complète : la _____ est la dérivée'),
+    };
+  });
+  assert.match(out.text, /la _____ est la dérivée/);
+  assert.match(out.text, /un _____ dans une liste/);
+  assert.deepEqual(out.strong, ['gras'], 'seul le vrai gras est en gras');
+  assert.deepEqual(out.em, ['italique']);
+  assert.match(out.plain, /la _____ est la dérivée/);
+  await context.close();
+});

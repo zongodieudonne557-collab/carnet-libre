@@ -27,7 +27,7 @@ const pickProvider = (page, name) => page.locator('label.prov', { hasText: name 
 test('réglages : ouverture propre, sans requête externe ni violation de CSP', async () => {
   const { page, log, context } = await settings();
   assert.equal(await page.locator('.settings h1').innerText(), 'Réglages');
-  assert.equal(await page.locator('.set > h2').count(), 5);
+  assert.equal(await page.locator('.set > h2').count(), 6);
   assert.equal(await page.locator('input[name="ai-provider"]').count(), 7);
   assert.equal(await page.locator('input[name="ai-provider"]:checked').getAttribute('value'), 'none');
   assert.match(await page.locator('.ai-panel').innerText(), /Sans IA, Carnet Libre reste utile/);
