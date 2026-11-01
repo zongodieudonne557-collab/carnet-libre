@@ -47,6 +47,19 @@ export function defaultVoices(voices) {
 
 export const findVoice = (voices, uri) => (uri ? (voices || []).find((v) => v.voiceURI === uri) || null : null);
 
+/**
+ * Voix et ton des deux animateurs (Awa = A, Issa = B) d'après les réglages.
+ * Si une seule voix est disponible, elle sert aux deux avec un ton plus aigu pour Awa et plus grave pour Issa.
+ * @returns {{a: {voice: object|null, pitch: number}, b: {voice: object|null, pitch: number}}}
+ */
+export function hostVoices(voices, tts = {}) {
+  const auto = defaultVoices(voices);
+  const a = findVoice(voices, tts.voiceA) || auto.a;
+  const b = findVoice(voices, tts.voiceB) || auto.b;
+  const same = !!a && !!b && (a === b || a.voiceURI === b.voiceURI);
+  return { a: { voice: a, pitch: same ? 1.2 : 1 }, b: { voice: b, pitch: same ? 0.75 : 1 } };
+}
+
 // ------------------------------------------------------------------ LaTeX → texte parlé (français)
 
 const GREEK = {

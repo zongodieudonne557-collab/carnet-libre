@@ -282,3 +282,21 @@ test('lecteur : sans moteur de synthèse, play() le dit au lieu de planter', () 
   assert.equal(reader.play(), false);
   assert.equal(errors.length, 1);
 });
+
+test('hostVoices : deux voix différentes si possible, sinon la même avec deux tons', async () => {
+  const { hostVoices } = await import('../../src/tts/speech.js');
+  const v = (name, lang = 'fr-FR', localService = true) => ({ name, lang, localService, voiceURI: name });
+  const two = hostVoices([v('Amélie'), v('Thomas')], {});
+  assert.notEqual(two.a.voice.name, two.b.voice.name);
+  assert.equal(two.a.pitch, 1);
+  assert.equal(two.b.pitch, 1);
+  const one = hostVoices([v('Amélie'), v('Alex', 'en-US')], {});
+  assert.equal(one.a.voice.name, 'Amélie');
+  assert.equal(one.b.voice.name, 'Amélie');
+  assert.ok(one.a.pitch > 1 && one.b.pitch < 1);
+  const chosen = hostVoices([v('Amélie'), v('Thomas'), v('Paul')], { voiceA: 'Paul', voiceB: 'Thomas' });
+  assert.equal(chosen.a.voice.name, 'Paul');
+  assert.equal(chosen.b.voice.name, 'Thomas');
+  const none = hostVoices([], {});
+  assert.equal(none.a.voice, null);
+});

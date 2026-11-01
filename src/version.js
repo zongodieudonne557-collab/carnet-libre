@@ -3,4 +3,4 @@
 export const APP_VERSION = '0.1.0';
 
 // Adresse du code source, affichée dans « À propos » quand elle est renseignée.
-export const REPO_URL = '';
+export const REPO_URL = 'https://github.com/zongodieudonne557-collab/carnet-libre';

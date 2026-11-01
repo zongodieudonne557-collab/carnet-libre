@@ -51,6 +51,15 @@ const jobListeners = new Set();
 const emit = () => {
   for (const fn of jobListeners) fn();
 };
+// Pendant une génération, le texte arrive par petits bouts : on ne prévient les écrans que 4 fois par seconde au plus.
+let softTimer = 0;
+const emitSoon = () => {
+  if (softTimer) return;
+  softTimer = setTimeout(() => {
+    softTimer = 0;
+    emit();
+  }, 250);
+};
 
 /**
  * Lance une tâche (génération par l'IA…) qui enregistre elle-même son résultat.
@@ -64,7 +73,7 @@ export function startJob({ key, notebookId, kind, label, run }) {
   jobs.set(key, job);
   job.promise = (async () => {
     try {
-      job.result = (await run({ signal: ctl.signal, setNote: (s) => ((job.note = s), emit()), setChars: (n) => ((job.chars = n), emit()) })) || null;
+      job.result = (await run({ signal: ctl.signal, setNote: (s) => ((job.note = s), emitSoon()), setChars: (n) => ((job.chars = n), emitSoon()) })) || null;
       job.status = 'done';
     } catch (e) {
       job.status = ctl.signal.aborted ? 'cancelled' : 'error';
@@ -79,6 +88,7 @@ export function startJob({ key, notebookId, kind, label, run }) {
 }
 
 export const getJob = (key) => jobs.get(key);
+export const listJobs = () => [...jobs.values()];
 export const runningJobs = (notebookId) => [...jobs.values()].filter((j) => j.status === 'running' && (!notebookId || j.notebookId === notebookId));
 export function cancelJob(key) {
   jobs.get(key)?.controller.abort();

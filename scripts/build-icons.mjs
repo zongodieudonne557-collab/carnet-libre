@@ -17,7 +17,7 @@ clipboard-paste cloud copy download ellipsis external-link eye eye-off file-pen 
 graduation-cap hard-drive headphones heart image info key-round languages layers lightbulb list-checks lock menu message-circle mic
 monitor moon notebook notebook-pen pause pencil play plus presentation quote refresh-cw repeat rotate-ccw scroll-text search send
 server settings shield-check shuffle skip-back skip-forward sparkles square square-check-big square-pen sun trash triangle-alert
-upload volume-2 wifi-off x
+upload volume-2 wifi-off x maximize printer
 `
   .trim()
   .split(/\s+/);

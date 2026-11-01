@@ -4,7 +4,8 @@ import { getSettings, loadSettings, subscribe, updateSettings } from './settings
 import { applyFontScale, applyTheme } from './ui/theme.js';
 import { focusMain, h, icon, mount, toast } from './ui/dom.js';
 import { currentPath, href, navigate, route, start } from './ui/router.js';
-import { loadData, subscribeJobs } from './ui/store.js';
+import { watchJobs } from './ui/jobs-notify.js';
+import { loadData } from './ui/store.js';
 
 const main = document.getElementById('main');
 const header = document.getElementById('app-header');
@@ -207,7 +208,7 @@ async function boot() {
     if (r?.name === 'AbortError' || r?.kind === 'abort') return;
     console.error(r);
   });
-  subscribeJobs(() => {}); // initialise le gestionnaire de tâches
+  watchJobs(); // un message quand une génération en tâche de fond se termine
   start(onRoute);
   registerWorker();
 }

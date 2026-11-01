@@ -5,7 +5,7 @@ Dépose tes cours (PDF, Word, PowerPoint, photos de cahier…), pose-leur des qu
 
 Carnet Libre est une alternative **libre** (licence MIT) inspirée des « carnets » de type NotebookLM, pensée pour les élèves et étudiants qui n'ont pas les moyens de payer un abonnement. Elle n'est affiliée ni à Google ni à NotebookLM.
 
-> **État : en construction.** Le moteur (import, recherche, IA, cartes) est fait et testé ; l'interface est en cours d'écriture. Voir [État d'avancement](#état-davancement) : rien n'est promis qui ne soit pas écrit ici.
+> **État : en construction.** Le moteur (import, recherche, IA, cartes) et l'interface (carnets, discussion, Réglages, cartes, quiz, fiches, causerie, diapos) sont faits et testés ; restent le mode hors ligne (PWA) et la documentation complète. Voir [État d'avancement](#état-davancement) : rien n'est promis qui ne soit pas écrit ici.
 
 ## Principes
 
@@ -46,10 +46,10 @@ Les appels aux services d'IA sont testés contre un faux serveur (`scripts/mock-
 | ✅ | Client d'IA (Ollama, Groq, Gemini, OpenRouter, Mistral, serveur compatible OpenAI) avec consentement par fournisseur | fait, testé contre un faux serveur |
 | ✅ | Cartes automatiques et répétition espacée | fait, testé |
 | ✅ | Accueil, carnets, sources (import, caméra, OCR), discussion avec citations (avec ou sans IA) | fait |
-| 🔨 | Réglages (choix de l'IA, clés, consentement, sauvegarde) et page Confidentialité | en cours |
-| ⏳ | Modes d'étude : cartes, quiz, fiches, causerie (podcast), diapos narrées | à faire |
+| ✅ | Réglages (choix de l'IA, clés, consentement, sauvegarde) et page Confidentialité | fait, testé |
+| ✅ | Modes d'étude : cartes, quiz, fiches, causerie (podcast), diapos narrées — avec ou sans IA | fait, testé dans un vrai navigateur (voix de synthèse non vérifiables sans voix installée) |
 | ⏳ | Mode hors ligne (PWA), installation sur téléphone | à faire |
-| ⏳ | Tests de bout en bout, documentation complète, guide « obtenir une clé gratuite » | à faire |
+| 🔨 | Tests de bout en bout (réglages, modes d'étude : faits), documentation complète, guide « obtenir une clé gratuite » | en cours |
 
 **Limites connues** : pas d'import par lien web ni YouTube (la politique CSP l'interdit volontairement) ; pas de modèle d'IA qui tourne dans le navigateur ; les PDF très mathématiques peuvent donner du texte désordonné ; les voix de lecture dépendent de l'appareil.
 
@@ -62,14 +62,14 @@ src/
   import/         lecture des fichiers : PDF, docx, pptx, images (OCR), texte…
   text/           découpage, recherche BM25, vérification des citations
   ai/             fournisseurs, client, extraits envoyés, génération, validation
-  study/          cartes automatiques, répétition espacée
+  study/          cartes automatiques, répétition espacée, séance, quiz et fiches locaux
   tts/            lecture à voix haute
-  ui/             écrans (accueil, carnet, sources, discussion…) et composants
+  ui/             écrans (accueil, carnet, sources, discussion, réviser…) et composants
   db.js           stockage local (IndexedDB), export / import / effacement
   settings.js     réglages et consentements (les clés d'API restent en mémoire sauf accord)
 vendor/           bibliothèques tierces (versionnées : pas de build)
 scripts/          serveur local, faux serveur d'IA, génération des icônes
-test/             tests unitaires et de navigateur
+test/             tests unitaires, de navigateur et de bout en bout
 ```
 
 ## Bibliothèques tierces

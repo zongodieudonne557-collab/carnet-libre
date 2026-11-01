@@ -48,6 +48,7 @@ const INLINE_PARTS = [
   /\\\[(?<bmath>.+?)\\\]/,
   /\$(?!\s)(?<math>[^$\n]+?)(?<!\s)\$(?!\d)/,
   /\[(?<ltext>[^\]\n]+)\]\((?<lurl>[^\s)]+)\)/,
+  /(?<blank>_{3,})/,
   /\*\*(?<b1>.+?)\*\*/,
   /__(?<b2>.+?)__/,
   /(?<!\*)\*(?![\s*])(?<i1>.+?)(?<![\s*])\*(?!\*)/,
@@ -87,7 +88,8 @@ function inline(text, ctx) {
     else if (g.ltext !== undefined) {
       const url = safeUrl(g.lurl);
       out.push(url ? h('a', { href: url, target: '_blank', rel: 'noopener noreferrer' }, inline(g.ltext, ctx)) : m[0]);
-    } else if (g.b1 !== undefined || g.b2 !== undefined) out.push(h('strong', inline(g.b1 ?? g.b2, ctx)));
+    } else if (g.blank !== undefined) out.push(g.blank);
+    else if (g.b1 !== undefined || g.b2 !== undefined) out.push(h('strong', inline(g.b1 ?? g.b2, ctx)));
     else if (g.i1 !== undefined || g.i2 !== undefined) out.push(h('em', inline(g.i1 ?? g.i2, ctx)));
     else if (g.s !== undefined) out.push(h('del', inline(g.s, ctx)));
     else if (g.cite !== undefined) {
@@ -311,6 +313,7 @@ export function markdownToText(md) {
   return String(md ?? '')
     .replace(/\r\n?/g, '\n')
     .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/_{3,}/g, '\u0001') // les blancs des textes à trous ne sont pas du gras
     .replace(/\[\d{1,3}\](?!\()/g, '')
     .replace(/\[([^\]]+)\]\((?:https?:[^)]+)\)/g, '$1')
     .replace(/^\s{0,3}#{1,6}\s+/gm, '')
@@ -320,5 +323,6 @@ export function markdownToText(md) {
     .replace(/`([^`]+)`/g, '$1')
     .replace(/[ \t]+\n/g, '\n')
     .replace(/\n{3,}/g, '\n\n')
+    .replace(/\u0001/g, '_____')
     .trim();
 }
